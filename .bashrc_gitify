@@ -1,0 +1,30 @@
+# Make the terminal nice for git
+
+function ps1_git_branch_name() {
+    git rev-parse --abbrev-ref HEAD 2> /dev/null || echo
+}
+
+function ps1_git_get_sha() {
+    git rev-parse --short HEAD 2> /dev/null
+}
+
+function we_are_in_git_work_tree() {
+    git rev-parse --is-inside-work-tree &> /dev/null
+}
+
+function ps1_gitify() {
+    if ! we_are_in_git_work_tree
+    then 
+        echo ""
+    else
+        echo "$(ps1_git_branch_name) $(ps1_git_get_sha)"
+    fi
+}
+
+function ps1_pimped() {
+    # warning: following should be one line
+    export PS1="\n\[\033[35m\]\D{%d.%m} \A\[\033[m\] \[\033[33;1m\]\w\[\033\[m\]\[\033[32m\] \$(ps1_gitify) \[\033[36m\]\n\[\033[31;2m\]\u\[\033[m\] \$ "
+}
+
+ps1_pimped
+
