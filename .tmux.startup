@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Set session name
+SESSION="Kubernilla"
+SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
+
+# Only if the session doesn't exist:
+if [ "$SESSIONEXISTS" = "" ]
+then
+    
+    tmux new-session -d -s $SESSION
+
+    # Make a window with the VPN
+    tmux rename-window -t $SESSION:1 'SIT VPN'
+    tmux send-keys -t 'SIT VPN' 'openconnect' C-m
+
+    # Make a window for development
+    tmux new-window -t $SESSION:2 -n 'Development'
+    tmux send-keys -t 'Development' 'll' C-m
+
+    # Make a split window
+    tmux split-window -t 1 -h
+
+    # Make another split window
+    tmux split-window -t 2 -v
+
+fi
+
+# Attach the session to the window
+tmux attach-session -t $SESSION
+

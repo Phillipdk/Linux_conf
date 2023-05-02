@@ -116,6 +116,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Change folder color to yellow.
+
+# 14 April 2023: Change folder color to yellow.
 LS_COLORS=$LS_COLORS:'di=1;33:' ; export LS_COLORS
+
+# 28 April 2023: Added to enable autocompletion in kubectl 
+source <(kubectl completion bash)
 
