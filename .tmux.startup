@@ -16,13 +16,17 @@ then
 
     # Make a window for development
     tmux new-window -t $SESSION:2 -n 'Development'
-    tmux send-keys -t 'Development' 'll' C-m
 
     # Make a split window
     tmux split-window -t 1 -h
+    # Run a ll command
+    tmux send-keys 'll' C-m
 
     # Make another split window
     tmux split-window -t 2 -v
+    # Run a gitify command
+    tmux send-keys 'gitify' C-m
+    tmux send-keys 'clear' C-m
 
 fi
 
